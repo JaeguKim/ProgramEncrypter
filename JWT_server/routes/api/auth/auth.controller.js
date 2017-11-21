@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const User = require('../../../models/user')
 
-
 /*
     POST /api/auth/login
     {
@@ -21,7 +20,7 @@ exports.login = (req, res) => {
             throw new Error('login failed')
         } else {
             // user exists, check the password
-            if(user.verify(password)) {
+            if(user.validatePW(password)) {
                 // create a promise that generates jwt asynchronously
                 const p = new Promise((resolve, reject) => {
                     jwt.sign(

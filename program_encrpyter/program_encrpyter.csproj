@@ -35,6 +35,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Json">
+      <HintPath>libs\System.Net.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +50,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="joinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="joinForm.Designer.cs">
+      <DependentUpon>joinForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="key_check_screen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="key_check_screen.Designer.cs">
+      <DependentUpon>key_check_screen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="menu.Designer.cs">
+      <DependentUpon>menu.cs</DependentUpon>
+    </Compile>
     <Compile Include="loginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,12 +82,27 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="startForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="startForm.Designer.cs">
+      <DependentUpon>startForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="timer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="timer.Designer.cs">
       <DependentUpon>timer.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="joinForm.resx">
+      <DependentUpon>joinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="key_check_screen.resx">
+      <DependentUpon>key_check_screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="menu.resx">
+      <DependentUpon>menu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="loginForm.resx">
       <DependentUpon>loginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -80,6 +117,9 @@
     </Compile>
     <EmbeddedResource Include="setting_screen.resx">
       <DependentUpon>setting_screen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="startForm.resx">
+      <DependentUpon>startForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="timer.resx">
       <DependentUpon>timer.cs</DependentUpon>

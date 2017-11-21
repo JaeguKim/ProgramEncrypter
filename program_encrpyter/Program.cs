@@ -16,7 +16,7 @@ namespace program_encrpyter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new setting_screen());
+            Application.Run(new startForm());
         }
     }
 }

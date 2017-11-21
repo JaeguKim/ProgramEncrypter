@@ -10,9 +10,13 @@ using System.Windows.Forms;
 using System.IO;
 using System.Security;
 using System.Security.Cryptography;
+using System.Diagnostics;
+using System.Net;
 
 namespace program_encrpyter
 {
+    using System.Net.Json;
+
     struct time_interval {
         public int hour, minute, second;
     }
@@ -77,27 +81,37 @@ namespace program_encrpyter
             file_list.Items.Remove(file_list.SelectedItem);
         }
 
-        private void other_user_id_changed(object sender, EventArgs e)
-        {
-            other_user_id = other_user_textbox.Text;
-        }
-
         private void confirm_btn_click(object sender, MouseEventArgs e)
         {
+            if (other_user_textbox.Text == "")
+            {
+                MessageBox.Show("Enter other user id!");
+                return;
+            }
+
+            string password,encrypted_password;
+            other_user_id = other_user_textbox.Text;
+
             //set timer
             file_names = new String[file_list.Items.Count];
             for (int i=0; i < file_names.Length; i++)
             {
                 file_names[i] = file_list.Items[i].ToString();
             }
-            startEncrypt();
+
+            password = startEncrypt();
+            encrypted_password = RSA_encrypt(password);
             change_file_names();
-            this.Hide();
-            int total_sec = time_interval.hour * 3600 + time_interval.minute * 60 + time_interval.second;
-            timer t_form = new timer(total_sec,file_names,password);
-            t_form.ShowDialog();
-            this.Show();
-            
+            if (requestToServer(other_user_id, encrypted_password))
+            {
+                this.Hide();
+                int total_sec = time_interval.hour * 3600 + time_interval.minute * 60 + time_interval.second;
+                timer t_form = new timer(total_sec, file_names, other_user_id,password);
+                t_form.ShowDialog();
+                this.Show();
+            }
+            else
+                return;
         }
 
         void change_file_names() {
@@ -105,6 +119,7 @@ namespace program_encrpyter
                 file_names[i] = file_names[i] + ".locked";
             }
         }
+
         //AES encryption algorithm
         public byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
         {
@@ -148,16 +163,106 @@ namespace program_encrpyter
             return res.ToString();
         }
 
-        /*
-        //Sends created password target location
-        public void SendPassword(string password)
+        private string RSA_encrypt(string plaintext)
         {
 
-            string info = computerName + "-" + userName + " " + password;
-            var fullUrl = targetURL + info;
-            var conent = new System.Net.WebClient().DownloadString(fullUrl);
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            Process p = new Process();
+
+            // Redirect the output stream of the child process.
+            proInfo.FileName = @"cmd";
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardOutput = true;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardError = true;
+
+            p.StartInfo = proInfo;
+            p.Start();
+
+            string cdCmd = "cd RSA_module";
+            string execCmd = "node rsa_encrypt.js 0086fa9ba066685845fc03833a9699c8baefb53cfbf19052a7f10f1eaa30488cec1ceb752bdff2df9fad6c64b3498956e7dbab4035b4823c99a44cc57088a23783 65537 " + plaintext;
+
+            string completeCmd = cdCmd + " && " + execCmd;
+            p.StandardInput.Write(@completeCmd + Environment.NewLine);
+            p.StandardInput.Close();
+
+            string line;
+            StreamReader outputReader = p.StandardOutput;
+            p.WaitForExit();
+            p.Close();
+
+            string cipher = "";
+
+            while ((line = outputReader.ReadLine()) != null)
+            {
+                if (line.Contains("encrypted:"))
+                {
+                    int start_idx = line.IndexOf(':') + 1;
+                    int end_idx = line.Length - 1;
+                    int cipher_len = end_idx - start_idx + 1;
+                    cipher = line.Substring(start_idx, cipher_len);
+                    break;
+                }
+
+            }
+
+            return cipher;
         }
-        */
+
+        string GetJsonString(JsonObjectCollection col, string field)
+        {
+            try
+            {
+                return Convert.ToString(col[field].GetValue());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format(" {0} : [ {1} ] ", ex.Message, field));
+            }
+        }
+
+        public bool requestToServer(string id, string encrypted_key)
+        {
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/sendKey");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = "{\"username\":\"" + id + "\"," +
+                              "\"encrypted_key\":\"" + encrypted_key + "\"}";
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            try
+            {
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                var streamReader = new StreamReader(httpResponse.GetResponseStream());
+
+                var result = streamReader.ReadToEnd();
+                JsonTextParser parser = new JsonTextParser();
+                JsonObject obj = parser.Parse(result);
+                JsonObjectCollection col = (JsonObjectCollection)obj;
+                string message = GetJsonString(col, "message");
+                if (message == "key sending success")
+                {
+                    MessageBox.Show(message);
+                    return true;
+                }
+
+            }
+            catch (WebException ex)
+            {
+                MessageBox.Show("key sending failed!");
+ 
+            }
+            return false;
+        }
 
         //Encrypts single file
         public void EncryptFile(string file, string password)
@@ -176,14 +281,16 @@ namespace program_encrpyter
 
         }
 
-        public void startEncrypt()
+        //encrypt files and return password
+        public string startEncrypt()
         {
             password = CreatePassword(15);
 
             for (int i = 0; i < file_names.Length; i++) {
                 EncryptFile(file_names[i], password);
             }
-            
+
+            return password;
         }
 
         private void hour_selected(object sender, EventArgs e)
@@ -201,9 +308,5 @@ namespace program_encrpyter
             time_interval.second = Int32.Parse(second_list.SelectedItem.ToString());
         }
 
-        private void setting_screen_close(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }

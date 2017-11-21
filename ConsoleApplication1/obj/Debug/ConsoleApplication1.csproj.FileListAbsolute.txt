@@ -1,0 +1,6 @@
+C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache

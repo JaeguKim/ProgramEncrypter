@@ -30,7 +30,7 @@
         {
             this.timer_label = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.other_user_textbox = new System.Windows.Forms.TextBox();
+            this.decrypt_pw_textBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,14 +53,15 @@
             this.button3.TabIndex = 19;
             this.button3.Text = "Confirm";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.pw_button_clicked);
             // 
-            // other_user_textbox
+            // decrypt_pw_textBox
             // 
-            this.other_user_textbox.Font = new System.Drawing.Font("굴림", 15F);
-            this.other_user_textbox.Location = new System.Drawing.Point(231, 313);
-            this.other_user_textbox.Name = "other_user_textbox";
-            this.other_user_textbox.Size = new System.Drawing.Size(100, 30);
-            this.other_user_textbox.TabIndex = 18;
+            this.decrypt_pw_textBox.Font = new System.Drawing.Font("굴림", 15F);
+            this.decrypt_pw_textBox.Location = new System.Drawing.Point(231, 313);
+            this.decrypt_pw_textBox.Name = "decrypt_pw_textBox";
+            this.decrypt_pw_textBox.Size = new System.Drawing.Size(100, 30);
+            this.decrypt_pw_textBox.TabIndex = 18;
             // 
             // label8
             // 
@@ -99,7 +100,7 @@
             this.ClientSize = new System.Drawing.Size(458, 466);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.other_user_textbox);
+            this.Controls.Add(this.decrypt_pw_textBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.timer_label);
@@ -114,7 +115,7 @@
 
         private System.Windows.Forms.Label timer_label;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox other_user_textbox;
+        private System.Windows.Forms.TextBox decrypt_pw_textBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;

@@ -179,7 +179,6 @@
             this.other_user_textbox.Name = "other_user_textbox";
             this.other_user_textbox.Size = new System.Drawing.Size(100, 30);
             this.other_user_textbox.TabIndex = 14;
-            this.other_user_textbox.TextChanged += new System.EventHandler(this.other_user_id_changed);
             // 
             // button3
             // 
@@ -213,7 +212,6 @@
             this.Controls.Add(this.label1);
             this.Name = "setting_screen";
             this.Text = "Form1";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.setting_screen_close);
             this.Load += new System.EventHandler(this.setting_screen_load);
             this.ResumeLayout(false);
             this.PerformLayout();
