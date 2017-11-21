@@ -139,8 +139,10 @@ namespace program_encrpyter
                 if (message == "logged in successfully")
                 {
                     MessageBox.Show(message);
+                    //get JWT token
+                    string token = GetJsonString(col, "token");
                     this.Hide();
-                    menu menu_screen = new menu(id);
+                    menu menu_screen = new menu(id,token);
                     menu_screen.ShowDialog();
                     this.Show();
                 }

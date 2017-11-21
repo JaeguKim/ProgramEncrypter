@@ -24,13 +24,16 @@ namespace program_encrpyter
     public partial class setting_screen : Form
     {
         time_interval time_interval;
+        
         string[] file_names;
+        string token_str;
         string other_user_id;
         string password;
-
-        public setting_screen()
+        
+        public setting_screen(string token)
         {
             InitializeComponent();
+            token_str = token;
         }
         
         
@@ -102,11 +105,11 @@ namespace program_encrpyter
             password = startEncrypt();
             encrypted_password = RSA_encrypt(password);
             change_file_names();
-            if (requestToServer(other_user_id, encrypted_password))
+            if (requestToServer(token_str,other_user_id, encrypted_password))
             {
                 this.Hide();
                 int total_sec = time_interval.hour * 3600 + time_interval.minute * 60 + time_interval.second;
-                timer t_form = new timer(total_sec, file_names, other_user_id,password);
+                timer t_form = new timer(token_str,total_sec, file_names, other_user_id,password);
                 t_form.ShowDialog();
                 this.Show();
             }
@@ -222,10 +225,10 @@ namespace program_encrpyter
             }
         }
 
-        public bool requestToServer(string id, string encrypted_key)
+        public bool requestToServer(string token,string id, string encrypted_key)
         {
-
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/sendKey");
+            httpWebRequest.Headers.Add("x-access-token:" + token);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 

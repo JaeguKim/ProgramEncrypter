@@ -23,10 +23,12 @@ namespace program_encrpyter
         private string password;
         private string user_id;
         private string[] decrypt_file_names;
+        private string token_str;
 
-        public timer(int total_sec, string[] encrypt_file_names, string other_user_id, string key)
+        public timer(string token,int total_sec, string[] encrypt_file_names, string other_user_id, string key)
         {
             InitializeComponent();
+            token_str = token;
             user_id = other_user_id;
             second_info = total_sec;
             myTimer.Tick += new EventHandler(TimerEventProcessor);
@@ -162,10 +164,10 @@ namespace program_encrpyter
             }
         }
 
-        public bool requestToServer(string id, string encrypted_key)
+        public bool requestToServer(string token,string id, string encrypted_key)
         {
-
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/validateKey");
+            httpWebRequest.Headers.Add("x-access-token:" + token);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
@@ -228,7 +230,7 @@ namespace program_encrpyter
             string decrypt_key = decrypt_pw_textBox.Text;
             string encrypted_key = RSA_encrypt(decrypt_key);
 
-            if (requestToServer(user_id, encrypted_key)) {
+            if (requestToServer(token_str,user_id, encrypted_key)) {
                 decryptAllFiles();
                 this.DialogResult = DialogResult.OK;
             }

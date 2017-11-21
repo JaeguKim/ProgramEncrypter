@@ -13,17 +13,18 @@ namespace program_encrpyter
     public partial class menu : Form
     {
         private string user_id;
-
-        public menu(string id)
+        private string token_str;
+        public menu(string id, string token)
         {
             InitializeComponent();
             user_id = id;
+            token_str = token;
         }
 
         private void file_encrypt_btn(object sender, EventArgs e)
         {
             this.Hide();
-            setting_screen setting_screen = new setting_screen();
+            setting_screen setting_screen = new setting_screen(token_str);
             setting_screen.ShowDialog();
             this.Show();
         }
@@ -31,7 +32,7 @@ namespace program_encrpyter
         private void key_check_btn(object sender, EventArgs e)
         {
             this.Hide();
-            key_check_screen setting_screen = new key_check_screen(user_id);
+            key_check_screen setting_screen = new key_check_screen(user_id,token_str);
             setting_screen.ShowDialog();
             this.Show();
         }

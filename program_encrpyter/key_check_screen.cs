@@ -17,10 +17,13 @@ namespace program_encrpyter
 
     public partial class key_check_screen : Form
     {
-        public key_check_screen(string id)
+        private string token_str;
+
+        public key_check_screen(string id, string token)
         {
             InitializeComponent();
-            if (!requestToServer(id))
+            token_str = token;
+            if (!requestToServer(id,token_str))
             {
                 this.DialogResult = DialogResult.OK;
             }
@@ -39,10 +42,10 @@ namespace program_encrpyter
             }
         }
 
-        public bool requestToServer(string id)
+        public bool requestToServer(string id, string token)
         {
-
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/getKey");
+            httpWebRequest.Headers.Add("x-access-token:"+token);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
