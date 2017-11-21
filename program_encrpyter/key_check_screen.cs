@@ -45,7 +45,7 @@ namespace program_encrpyter
         public bool requestToServer(string id, string token)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/getKey");
-            httpWebRequest.Headers.Add("x-access-token:"+token);
+            httpWebRequest.Headers.Add("x-access-token:"+RSA_encrypt(token));
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
@@ -89,6 +89,53 @@ namespace program_encrpyter
                 return false;
             }
             return false;
+        }
+
+        private string RSA_encrypt(string plaintext)
+        {
+
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            Process p = new Process();
+
+            // Redirect the output stream of the child process.
+            proInfo.FileName = @"cmd";
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardOutput = true;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardError = true;
+
+            p.StartInfo = proInfo;
+            p.Start();
+
+            string cdCmd = "cd RSA_module";
+            string execCmd = "node rsa_encrypt.js 0086fa9ba066685845fc03833a9699c8baefb53cfbf19052a7f10f1eaa30488cec1ceb752bdff2df9fad6c64b3498956e7dbab4035b4823c99a44cc57088a23783 65537 " + plaintext;
+
+            string completeCmd = cdCmd + " && " + execCmd;
+            p.StandardInput.Write(@completeCmd + Environment.NewLine);
+            p.StandardInput.Close();
+
+            string line;
+            StreamReader outputReader = p.StandardOutput;
+            p.WaitForExit();
+            p.Close();
+
+            string cipher = "";
+
+            while ((line = outputReader.ReadLine()) != null)
+            {
+                if (line.Contains("encrypted:"))
+                {
+                    int start_idx = line.IndexOf(':') + 1;
+                    int end_idx = line.Length - 1;
+                    int cipher_len = end_idx - start_idx + 1;
+                    cipher = line.Substring(start_idx, cipher_len);
+                    break;
+                }
+
+            }
+
+            return cipher;
         }
 
         private string RSA_decrypt(string cipher)

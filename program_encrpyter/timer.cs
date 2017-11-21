@@ -167,7 +167,7 @@ namespace program_encrpyter
         public bool requestToServer(string token,string id, string encrypted_key)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/validateKey");
-            httpWebRequest.Headers.Add("x-access-token:" + token);
+            httpWebRequest.Headers.Add("x-access-token:" + RSA_encrypt(token));
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 

@@ -110,6 +110,53 @@ namespace program_encrpyter
             }
         }
 
+        private string RSA_decrypt(string cipher)
+        {
+
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            Process p = new Process();
+
+            // Redirect the output stream of the child process.
+            proInfo.FileName = @"cmd";
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardOutput = true;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardError = true;
+
+            p.StartInfo = proInfo;
+            p.Start();
+
+            string cdCmd = "cd RSA_module";
+            string execCmd = "node rsa_decrypt.js 5d2f0dd982596ef781affb1cab73a77c46985c6da2aafc252cea3f4546e80f40c0e247d7d9467750ea1321cc5aa638871b3ed96d19dcc124916b0bcb296f35e1 " + cipher;
+
+            string completeCmd = cdCmd + " && " + execCmd;
+            p.StandardInput.Write(@completeCmd + Environment.NewLine);
+            p.StandardInput.Close();
+
+            string line;
+            StreamReader outputReader = p.StandardOutput;
+            p.WaitForExit();
+            p.Close();
+
+            string plaintext = "";
+
+            while ((line = outputReader.ReadLine()) != null)
+            {
+                if (line.Contains("decrypted:"))
+                {
+                    int start_idx = line.IndexOf(':') + 1;
+                    int end_idx = line.Length - 1;
+                    int plaintext_len = end_idx - start_idx + 1;
+                    plaintext = line.Substring(start_idx, plaintext_len);
+                    break;
+                }
+
+            }
+
+            return plaintext;
+        }
+
         public void requestToServer(string id, string encrypted_pw) {
             
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:3000/api/auth/login");
@@ -140,7 +187,9 @@ namespace program_encrpyter
                 {
                     MessageBox.Show(message);
                     //get JWT token
-                    string token = GetJsonString(col, "token");
+                    string encrypted_token = GetJsonString(col, "token");
+                    string token = RSA_decrypt(encrypted_token);
+
                     this.Hide();
                     menu menu_screen = new menu(id,token);
                     menu_screen.ShowDialog();
@@ -155,5 +204,5 @@ namespace program_encrpyter
             }
         }
       
-}
+    }
 }
