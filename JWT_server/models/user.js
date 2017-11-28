@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const crypto = require('crypto')
 const config = require('../config')
-var NodeRSA = require('node-rsa');
 
+var NodeRSA = require('node-rsa');
 var decrypt_key = new NodeRSA({b: 512});
 
 

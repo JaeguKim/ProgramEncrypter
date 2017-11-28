@@ -163,14 +163,21 @@ namespace program_encrpyter
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            try
             {
-                string json = "{\"username\":\""+id+"\"," +
-                              "\"password\":\""+encrypted_pw+"\"}";
-       
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    string json = "{\"username\":\"" + id + "\"," +
+                                  "\"password\":\"" + encrypted_pw + "\"}";
+
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+            }
+            catch {
+                MessageBox.Show("Server is not responding");
+                return;
             }
 
             try

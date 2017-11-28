@@ -92,6 +92,11 @@ namespace program_encrpyter
                 return;
             }
 
+            if (time_interval.hour == 0 && time_interval.minute == 0 && time_interval.second == 0) {
+                MessageBox.Show("set the time!");
+                return;
+            }
+
             string password,encrypted_password;
             other_user_id = other_user_textbox.Text;
 
