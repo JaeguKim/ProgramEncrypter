@@ -97,7 +97,6 @@ namespace program_encrpyter
                 return;
             }
 
-            string password,encrypted_password;
             other_user_id = other_user_textbox.Text;
 
             //set timer
@@ -107,11 +106,13 @@ namespace program_encrpyter
                 file_names[i] = file_list.Items[i].ToString();
             }
 
-            password = startEncrypt();
-            encrypted_password = RSA_encrypt(password);
-            change_file_names();
+            password = CreatePassword(15);
+            string encrypted_password = RSA_encrypt(password);
+            
             if (requestToServer(token_str,other_user_id, encrypted_password))
             {
+                startEncrypt();
+                change_file_names();
                 this.Hide();
                 int total_sec = time_interval.hour * 3600 + time_interval.minute * 60 + time_interval.second;
                 timer t_form = new timer(token_str,total_sec, file_names, other_user_id,password);
@@ -267,6 +268,7 @@ namespace program_encrpyter
             catch (WebException ex)
             {
                 MessageBox.Show("key sending failed!");
+                return false;
  
             }
             return false;
@@ -290,15 +292,16 @@ namespace program_encrpyter
         }
 
         //encrypt files and return password
-        public string startEncrypt()
+        public void startEncrypt()
         {
-            password = CreatePassword(15);
-
+            if (password == "") {
+                MessageBox.Show("Password not generated!");
+                return;
+            }
+            
             for (int i = 0; i < file_names.Length; i++) {
                 EncryptFile(file_names[i], password);
             }
-
-            return password;
         }
 
         private void hour_selected(object sender, EventArgs e)

@@ -25,3 +25,19 @@ C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\program_e
 C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.key_check_screen.resources
 C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.menu.resources
 C:\Users\Jaegu\Documents\Visual Studio 2015\Projects\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.startForm.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\bin\Debug\program_encrpyter.exe.config
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.exe
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.pdb
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\bin\Debug\program_encrpyter.exe
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\bin\Debug\program_encrpyter.pdb
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\bin\Debug\System.Net.Json.dll
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.csprojResolveAssemblyReference.cache
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.joinForm.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.key_check_screen.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.menu.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.loginForm.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.Properties.Resources.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.setting_screen.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.startForm.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.timer.resources
+C:\Users\Jaegu\Desktop\program_encrypter\program_encrpyter\obj\Debug\program_encrpyter.csproj.GenerateResource.Cache
