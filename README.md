@@ -24,5 +24,4 @@ Some parents may want their children to restrict some specific software for spec
   
 ![alt text](https://github.com/JaeguKim/ProgramEncrypter/blob/master/ProgramEncrypter/aes_encrypt.png)
 
-## Demonstration Video
-[link](https://www.youtube.com/watch?v=DKc-Dy6k1Hc)
+## [Demonstration Video](https://www.youtube.com/watch?v=DKc-Dy6k1Hc)
